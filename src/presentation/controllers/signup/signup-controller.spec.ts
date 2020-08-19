@@ -1,7 +1,8 @@
 import { SignUpController } from './signup-controller'
+import { MissingParamError } from '../../../presentation/errors/missing-param-error'
 
 describe('SignUp Controller', () => {
-  test('Should return an error if no name is provided', () => {
+  test('Should return MissingParamError if no name is provided', () => {
     const sut = new SignUpController()
     const httpRequest = {
       body: {
@@ -12,10 +13,10 @@ describe('SignUp Controller', () => {
     }
     const httpResponse = sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.body).toEqual(new Error('Missing param: name'))
+    expect(httpResponse.body).toEqual(new MissingParamError('name'))
   })
 
-  test('Should return an error if no email is provided', () => {
+  test('Should return MissingParamError if no email is provided', () => {
     const sut = new SignUpController()
     const httpRequest = {
       body: {
@@ -26,10 +27,10 @@ describe('SignUp Controller', () => {
     }
     const httpResponse = sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.body).toEqual(new Error('Missing param: email'))
+    expect(httpResponse.body).toEqual(new MissingParamError('email'))
   })
 
-  test('Should return an error if no password is provided', () => {
+  test('Should return MissingParamError if no password is provided', () => {
     const sut = new SignUpController()
     const httpRequest = {
       body: {
@@ -40,10 +41,10 @@ describe('SignUp Controller', () => {
     }
     const httpResponse = sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.body).toEqual(new Error('Missing param: password'))
+    expect(httpResponse.body).toEqual(new MissingParamError('password'))
   })
 
-  test('Should return an error if no password confirmation is provided', () => {
+  test('Should return MissingParamError if no password confirmation is provided', () => {
     const sut = new SignUpController()
     const httpRequest = {
       body: {
@@ -54,6 +55,6 @@ describe('SignUp Controller', () => {
     }
     const httpResponse = sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.body).toEqual(new Error('Missing param: passwordConfirmation'))
+    expect(httpResponse.body).toEqual(new MissingParamError('passwordConfirmation'))
   })
 })
