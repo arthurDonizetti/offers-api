@@ -1,6 +1,6 @@
 export class SignUpController {
   handle (httpRequest: any): any {
-    const { name, email } = httpRequest.body
+    const { name, email, password } = httpRequest.body
 
     if (name === undefined) {
       return {
@@ -13,6 +13,13 @@ export class SignUpController {
       return {
         statusCode: 400,
         body: new Error('Missing param: email')
+      }
+    }
+
+    if (password === undefined) {
+      return {
+        statusCode: 400,
+        body: new Error('Missing param: password')
       }
     }
   }
