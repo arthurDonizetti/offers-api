@@ -1,5 +1,7 @@
 import { DbAddAccount } from './db-add-account'
-import { Hasher } from '../../../data/protocols/hasher'
+import {
+  Hasher
+} from './db-add-account-protocols'
 
 interface SutTypes {
   sut: DbAddAccount
