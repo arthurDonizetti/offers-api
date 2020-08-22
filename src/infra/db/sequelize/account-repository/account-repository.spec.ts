@@ -1,6 +1,10 @@
 import { SequelizeHelper as connection } from '../helpers/sequelize-helper'
 import { AccountPostgreRepository } from './account-repository'
 
+const makeSut = (): AccountPostgreRepository => {
+  return new AccountPostgreRepository()
+}
+
 describe('Account Postgre Repository', () => {
   beforeAll(async () => {
     await connection.connect(process.env.DATABASE_URL)
@@ -13,7 +17,7 @@ describe('Account Postgre Repository', () => {
   })
 
   test('Should return an account on success', async () => {
-    const sut = new AccountPostgreRepository()
+    const sut = makeSut()
     const account = await sut.add({
       name: 'any_name',
       email: 'any_email@mail.com',
