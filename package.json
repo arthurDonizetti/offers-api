@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "sucrase-node src/main/server.ts",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test:verbose": "jest --passWithNoTests --runInBand",
     "test:unit": "npm test -- --watch -c jest-unit-config.js",
@@ -16,6 +17,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/bcrypt": "^3.0.0",
+    "@types/express": "^4.17.7",
     "@types/jest": "^26.0.10",
     "@types/node": "^14.6.0",
     "@types/sequelize": "^4.28.9",
@@ -39,6 +41,7 @@
   "dependencies": {
     "bcrypt": "^5.0.0",
     "dotenv": "^8.2.0",
+    "express": "^4.17.1",
     "pg": "^8.3.2",
     "pg-hstore": "^2.3.3",
     "sequelize": "^6.3.4",
