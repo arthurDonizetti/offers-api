@@ -7,6 +7,9 @@ module.exports = {
     '!**/protocols/**',
     '!**/test/**'
   ],
+  setupFiles: [
+    './jest.setup.js'
+  ],
   coverageDirectory: 'coverage',
   coverageProvider: 'v8',
   testEnvironment: 'node',
