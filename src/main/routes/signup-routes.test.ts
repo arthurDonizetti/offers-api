@@ -1,19 +1,22 @@
 import request from 'supertest'
 import app from '../config/app'
+import { AccountRepoModel } from '../../infra/db/sequelize/models/account-model'
 import { SequelizeHelper as connection } from '../../infra/db/sequelize/helpers/sequelize-helper'
 
 describe('SignUp Routes', () => {
   beforeAll(async () => {
-    await connection.connect(process.env.DATABASE_URL)
+    await connection.connect()
   })
 
   beforeEach(async () => {
-    const accountModel = (await import('../../infra/db/sequelize/models/account-model')).default
+    AccountRepoModel(connection.client)
+    const accountModel = connection.getModel('Accounts')
     await accountModel.destroy({ where: {}, truncate: true })
   })
 
   afterAll(async () => {
-    const accountModel = (await import('../../infra/db/sequelize/models/account-model')).default
+    AccountRepoModel(connection.client)
+    const accountModel = connection.getModel('Accounts')
     await accountModel.destroy({ where: {}, truncate: true })
     await connection.disconnect()
   })

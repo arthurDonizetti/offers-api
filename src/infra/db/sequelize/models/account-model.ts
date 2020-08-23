@@ -1,19 +1,16 @@
-import { Model, DataTypes } from 'sequelize'
-import { SequelizeHelper } from '../helpers/sequelize-helper'
+import { Model, DataTypes, Sequelize } from 'sequelize'
 
-const connection = SequelizeHelper.client
+export const AccountRepoModel = async (connection: Sequelize): Promise<void> => {
+  interface Account extends Model {
+    id: string
+    name: string
+    email: string
+    password: string
+    created_at: Date
+    updated_at: Date
+  }
 
-class Account extends Model {
-  public id!: string
-  public name!: string
-  public email!: string
-  public password!: string
-  public readonly created_at!: Date
-  public readonly updated_at!: Date
-}
-
-Account.init(
-  {
+  connection.define<Account>('Accounts', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -33,9 +30,6 @@ Account.init(
     }
   }, {
     tableName: 'accounts',
-    sequelize: connection,
     underscored: true
-  }
-)
-
-export default Account
+  })
+}

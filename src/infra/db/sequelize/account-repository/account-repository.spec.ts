@@ -1,17 +1,25 @@
 import { SequelizeHelper as connection } from '../helpers/sequelize-helper'
 import { AccountPostgreRepository } from './account-repository'
+import { AccountRepoModel } from '../models/account-model'
 
 const makeSut = (): AccountPostgreRepository => {
-  return new AccountPostgreRepository()
+  return new AccountPostgreRepository(connection)
 }
 
 describe('Account Postgre Repository', () => {
   beforeAll(async () => {
-    await connection.connect(process.env.DATABASE_URL)
+    await connection.connect()
+  })
+
+  beforeEach(async () => {
+    AccountRepoModel(connection.client)
+    const accountModel = connection.getModel('Accounts')
+    await accountModel.destroy({ where: {}, truncate: true })
   })
 
   afterAll(async () => {
-    const accountModel = (await import('../models/account-model')).default
+    AccountRepoModel(connection.client)
+    const accountModel = connection.getModel('Accounts')
     await accountModel.destroy({ where: {}, truncate: true })
     await connection.disconnect()
   })

@@ -1,10 +1,9 @@
-import { Sequelize } from 'sequelize'
+import { Sequelize, Model, ModelCtor } from 'sequelize'
 
 export const SequelizeHelper = {
   client: null as Sequelize,
-  uri: null as string,
-  async connect (uri: string): Promise<void> {
-    this.uri = uri
+  uri: process.env.DATABASE_URL,
+  async connect (): Promise<void> {
     this.client = new Sequelize(this.uri, {
       logging: false
     })
@@ -17,7 +16,11 @@ export const SequelizeHelper = {
       return false
     }
   },
+  getModel (name: string): ModelCtor<Model> {
+    return this.client.models[name]
+  },
   async disconnect (): Promise<void> {
     await this.client.close()
+    this.client = null
   }
 }

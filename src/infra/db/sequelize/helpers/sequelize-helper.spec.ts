@@ -2,7 +2,7 @@ import { SequelizeHelper as sut } from './sequelize-helper'
 
 describe('Sequelize Helper', () => {
   beforeAll(async () => {
-    await sut.connect(process.env.DATABASE_URL)
+    await sut.connect()
   })
 
   afterAll(async () => {
