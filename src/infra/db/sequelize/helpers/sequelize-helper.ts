@@ -11,9 +11,9 @@ export const SequelizeHelper = {
   async testConnection (): Promise<boolean> {
     try {
       await this.client.authenticate()
-      return true
+      return await new Promise(resolve => resolve(true))
     } catch (error) {
-      return false
+      return await new Promise(resolve => resolve(false))
     }
   },
   getModel (name: string): ModelCtor<Model> {
@@ -21,6 +21,5 @@ export const SequelizeHelper = {
   },
   async disconnect (): Promise<void> {
     await this.client.close()
-    this.client = null
   }
 }
