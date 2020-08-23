@@ -7,11 +7,8 @@ const makeSut = (): AccountPostgreRepository => {
 }
 
 describe('Account Postgre Repository', () => {
-  beforeAll(async () => {
-    await connection.connect()
-  })
-
   beforeEach(async () => {
+    await connection.connect()
     AccountRepoModel(connection.client)
     const accountModel = connection.getModel('Accounts')
     await accountModel.destroy({ where: {}, truncate: true })
@@ -36,5 +33,15 @@ describe('Account Postgre Repository', () => {
     expect(account.name).toBe('any_name')
     expect(account.email).toBe('any_email@mail.com')
     expect(account.password).toBe('any_password')
+  })
+
+  test('Should close connection after insert an account', async () => {
+    const sut = makeSut()
+    await sut.add({
+      name: 'any_name',
+      email: 'any_email@mail.com',
+      password: 'any_password'
+    })
+    expect(await connection.testConnection()).toBeFalsy()
   })
 })
