@@ -1,11 +1,12 @@
 import { AddAccountRepository } from '../../../../data/protocols/db/account/add-account-repository'
 import { LoadAccountByEmailRepository } from '../../../../data/protocols/db/account/load-account-by-email-repository'
+import { UpdateAccessTokenRepository } from '../../../../data/protocols/db/account/update-access-token-repository'
 import { AddAccountModel } from '../../../../domain/usecases/account/add-account'
 import { AccountModel } from '../../../../domain/models/account/account-model'
 import { AccountRepoModel } from '../models/account-model'
 import { ModelCtor, Model } from 'sequelize/types'
 
-export class AccountPostgreRepository implements AddAccountRepository, LoadAccountByEmailRepository {
+export class AccountPostgreRepository implements AddAccountRepository, LoadAccountByEmailRepository, UpdateAccessTokenRepository {
   private readonly model: ModelCtor<Model<any, any>>
 
   constructor (private readonly connection: any) {
@@ -36,5 +37,14 @@ export class AccountPostgreRepository implements AddAccountRepository, LoadAccou
     } else {
       return null
     }
+  }
+
+  async updateAccessToken (id: string, token: string): Promise<void> {
+    await this.model.update({
+      access_token: token
+    },
+    {
+      where: { id: id }
+    })
   }
 }

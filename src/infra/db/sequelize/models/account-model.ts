@@ -6,6 +6,7 @@ export const AccountRepoModel = async (connection: Sequelize): Promise<void> => 
     name: string
     email: string
     password: string
+    access_token: string
     created_at: Date
     updated_at: Date
   }
@@ -27,6 +28,10 @@ export const AccountRepoModel = async (connection: Sequelize): Promise<void> => 
     password: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    access_token: {
+      type: DataTypes.STRING,
+      allowNull: true
     }
   }, {
     tableName: 'accounts',
