@@ -67,6 +67,12 @@ describe('Account Postgre Repository', () => {
     expect(account).toBeFalsy()
   })
 
+  test('Should close connection after calls loadByEmail', async () => {
+    const sut = makeSut()
+    await sut.loadByEmail('any_email@mail.com')
+    expect(await connection.testConnection()).toBeFalsy()
+  })
+
   test('Should update the account accessToken on updateAccessToken success', async () => {
     const sut = makeSut()
     const accountModel = connection.getModel('Accounts')
