@@ -10,6 +10,20 @@ describe('Login Routes', () => {
   })
 
   beforeEach(async () => {
+    const isConnected = await connection.testConnection()
+    if (!isConnected) {
+      await connection.connect()
+    }
+    AccountRepoModel(connection.client)
+    const accountModel = connection.getModel('Accounts')
+    await accountModel.destroy({ where: {}, truncate: true })
+  })
+
+  afterEach(async () => {
+    const isConnected = await connection.testConnection()
+    if (!isConnected) {
+      await connection.connect()
+    }
     AccountRepoModel(connection.client)
     const accountModel = connection.getModel('Accounts')
     await accountModel.destroy({ where: {}, truncate: true })
