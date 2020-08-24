@@ -2,8 +2,8 @@ import {
   AccountModel,
   AddAccount,
   AddAccountModel,
-  Validation,
   HttpRequest,
+  Validation,
   badRequest
 } from './signup-protocols'
 import { SignUpController } from './signup-controller'
