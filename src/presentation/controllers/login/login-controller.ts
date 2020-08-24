@@ -1,13 +1,18 @@
 import { Controller, HttpRequest, HttpResponse, Authentication } from './login-protocols'
-import { unauthorized, serverError, ok } from '../signup/signup-protocols'
+import { unauthorized, serverError, ok, Validation, badRequest } from '../signup/signup-protocols'
 
 export class LoginController implements Controller {
   constructor (
-    private readonly authentication: Authentication
+    private readonly authentication: Authentication,
+    private readonly validation: Validation
   ) {}
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
+      const error = this.validation.validate(httpRequest.body)
+      if (error) {
+        return badRequest(error)
+      }
       const { email, password } = httpRequest.body
       const accessToken = await this.authentication.auth({ email, password })
       if (!accessToken) {
