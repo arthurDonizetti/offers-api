@@ -1,5 +1,5 @@
 import { HttpRequest, Authentication, AuthenticationModel } from './login-protocols'
-import { unauthorized, serverError } from '../../helpers/http-helper'
+import { unauthorized, serverError, ok } from '../../helpers/http-helper'
 import { LoginController } from './login-controller'
 
 interface SutTypes {
@@ -55,5 +55,11 @@ describe('Login Controller', () => {
     jest.spyOn(authenticationStub, 'auth').mockRejectedValueOnce(new Promise((resolve, reject) => reject(new Error())))
     const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(serverError(new Error()))
+  })
+
+  test('Should return Ok if valid credentials are provided', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle(makeFakeRequest())
+    expect(httpResponse).toEqual(ok({ accessToken: 'any_token' }))
   })
 })
