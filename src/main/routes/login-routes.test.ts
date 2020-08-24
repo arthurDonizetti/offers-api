@@ -42,8 +42,20 @@ describe('Login Routes', () => {
     })
   })
 
+  describe('POST /login', () => {
+    test('Should return 401 on login fail', async () => {
+      await request(app)
+        .post('/api/login')
+        .send({
+          email: 'any_email@mail.com',
+          password: 'any_password'
+        })
+        .expect(401)
+    })
+  })
+
   describe('POST /signup', () => {
-    test('Should return ok on success', async () => {
+    test('Should return 200 on success', async () => {
       await request(app)
         .post('/api/signup')
         .send({
