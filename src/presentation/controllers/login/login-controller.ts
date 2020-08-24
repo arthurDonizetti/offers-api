@@ -1,5 +1,5 @@
 import { Controller, HttpRequest, HttpResponse, Authentication } from './login-protocols'
-import { unauthorized, serverError } from '../signup/signup-protocols'
+import { unauthorized, serverError, ok } from '../signup/signup-protocols'
 
 export class LoginController implements Controller {
   constructor (
@@ -13,7 +13,7 @@ export class LoginController implements Controller {
       if (!accessToken) {
         return unauthorized()
       }
-      return await new Promise(resolve => resolve(null))
+      return ok({ accessToken })
     } catch (error) {
       return serverError(error)
     }
