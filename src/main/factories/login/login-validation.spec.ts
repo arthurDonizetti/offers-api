@@ -26,6 +26,6 @@ describe('Loginvalidation Factory', () => {
       validations.push(new RequiredFieldValidation(field))
     }
     validations.push(new EmailValidation('email', makeEmailValidator()))
-    expect(ValidationComposite).toHaveBeenLastCalledWith(validations)
+    expect(ValidationComposite).toHaveBeenCalledWith(validations)
   })
 })
