@@ -3,7 +3,7 @@ import app from '../config/app'
 import { AccountRepoModel } from '../../infra/db/sequelize/models/account-model'
 import { SequelizeHelper as connection } from '../../infra/db/sequelize/helpers/sequelize-helper'
 
-describe('SignUp Routes', () => {
+describe('Login Routes', () => {
   beforeAll(async () => {
     await connection.connect()
   })
@@ -21,15 +21,17 @@ describe('SignUp Routes', () => {
     await connection.disconnect()
   })
 
-  test('Should return an account on success', async () => {
-    await request(app)
-      .post('/api/signup')
-      .send({
-        name: 'any_name',
-        email: 'any_email@mail.com',
-        password: 'any_password',
-        passwordConfirmation: 'any_password'
-      })
-      .expect(200)
+  describe('POST /signup', () => {
+    test('Should return ok on success', async () => {
+      await request(app)
+        .post('/api/signup')
+        .send({
+          name: 'any_name',
+          email: 'any_email@mail.com',
+          password: 'any_password',
+          passwordConfirmation: 'any_password'
+        })
+        .expect(200)
+    })
   })
 })
