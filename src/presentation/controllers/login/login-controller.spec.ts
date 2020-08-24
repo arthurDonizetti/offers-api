@@ -1,10 +1,20 @@
-import { HttpRequest, Authentication, AuthenticationModel } from './login-protocols'
+import { HttpRequest, Authentication, AuthenticationModel, Validation } from './login-protocols'
 import { unauthorized, serverError, ok } from '../../helpers/http/http-helper'
 import { LoginController } from './login-controller'
 
 interface SutTypes {
   sut: LoginController
   authenticationStub: Authentication
+  validationStub: Validation
+}
+
+const makeValidationStub = (): Validation => {
+  class ValidationStub implements Validation {
+    validate (input: any): Error {
+      return null
+    }
+  }
+  return new ValidationStub()
 }
 
 const makeAuthenticationStub = (): Authentication => {
@@ -17,11 +27,13 @@ const makeAuthenticationStub = (): Authentication => {
 }
 
 const makeSut = (): SutTypes => {
+  const validationStub = makeValidationStub()
   const authenticationStub = makeAuthenticationStub()
-  const sut = new LoginController(authenticationStub)
+  const sut = new LoginController(authenticationStub, validationStub)
   return {
     sut,
-    authenticationStub
+    authenticationStub,
+    validationStub
   }
 }
 
@@ -61,5 +73,13 @@ describe('Login Controller', () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(ok({ accessToken: 'any_token' }))
+  })
+
+  test('Should call Validation with correct values', async () => {
+    const { sut, validationStub } = makeSut()
+    const validateSpy = jest.spyOn(validationStub, 'validate')
+    const httpRequest = makeFakeRequest()
+    await sut.handle(httpRequest)
+    expect(validateSpy).toHaveBeenCalledWith(httpRequest.body)
   })
 })
