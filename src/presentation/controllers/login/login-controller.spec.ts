@@ -1,5 +1,5 @@
 import { HttpRequest, Authentication, AuthenticationModel } from './login-protocols'
-import { unauthorized, serverError, ok } from '../../helpers/http-helper'
+import { unauthorized, serverError, ok } from '../../helpers/http/http-helper'
 import { LoginController } from './login-controller'
 
 interface SutTypes {
