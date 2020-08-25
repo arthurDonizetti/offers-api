@@ -97,7 +97,7 @@ describe('DbAddAccount Usecase', () => {
     await expect(promise).rejects.toThrow()
   })
 
-  test('Should call AddAccountRepository with correct values', async () => {
+  test('Should return an valid account on success', async () => {
     const { sut } = makeSut()
     const accountData = {
       name: 'valid_name',
