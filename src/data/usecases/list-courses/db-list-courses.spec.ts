@@ -1,7 +1,9 @@
+import {
+  SearchCourseModel,
+  CourseModel,
+  ListCourseRepository
+} from './db-list-courses-protocols'
 import { DbListCourses } from './db-list-courses'
-import { SearchCourseModel } from '../../../domain/usecases/course/list-courses'
-import { CourseModel } from '../../../domain/models/course/course-model'
-import { ListCourseRepository } from '../../protocols/db/course/list-course-repository'
 import { HttpRequest } from 'presentation/protocols'
 
 const makeListCourseRepositoryStub = (): ListCourseRepository => {

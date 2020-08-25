@@ -1,6 +1,9 @@
-import { ListCourses, SearchCourseModel } from '../../../domain/usecases/course/list-courses'
-import { CourseModel } from '../../../domain/models/course/course-model'
-import { ListCourseRepository } from '../../protocols/db/course/list-course-repository'
+import {
+  ListCourses,
+  SearchCourseModel,
+  CourseModel,
+  ListCourseRepository
+} from './db-list-courses-protocols'
 
 export class DbListCourses implements ListCourses {
   constructor (private readonly listCourseRepository: ListCourseRepository) {}
