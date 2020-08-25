@@ -1,9 +1,10 @@
 import { ListCoursesController } from './list-courses-controller'
 import { ListCourses } from '../../../domain/usecases/course/list-courses'
 import { CourseModel } from '../../../domain/models/course/course-model'
-import { serverError, ok } from '../../helpers/http/http-helper'
+import { serverError, ok, badRequest } from '../../helpers/http/http-helper'
 import { HttpRequest } from '../../protocols/http'
 import { Validation } from '../../protocols'
+import { InvalidParamError } from '../../errors'
 
 const makeListCoursesStub = (): ListCourses => {
   class ListCoursesStub implements ListCourses {
@@ -80,5 +81,12 @@ describe('ListCourses Controller', () => {
     const httpRequest = makeFakeRequest()
     await sut.handle(httpRequest)
     expect(validateSpy).toHaveBeenCalledWith(httpRequest.body)
+  })
+
+  test('Should return bad request if Validation returns an error', async () => {
+    const { sut, validationStub } = makeSut()
+    jest.spyOn(validationStub, 'validate').mockReturnValueOnce(new InvalidParamError('any_field'))
+    const httpResponse = await sut.handle(makeFakeRequest())
+    expect(httpResponse).toEqual(badRequest(new InvalidParamError('any_field')))
   })
 })
