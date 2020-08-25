@@ -27,7 +27,6 @@ export class AccountPostgreRepository implements AddAccountRepository, LoadAccou
 
   async loadByEmail (email: string): Promise<AccountModel> {
     const account = await this.model.findOne({ where: { email: email } })
-    this.connection.disconnect()
     if (account) {
       return {
         id: account.getDataValue('id'),
