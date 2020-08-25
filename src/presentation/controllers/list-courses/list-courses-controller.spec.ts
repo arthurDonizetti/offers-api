@@ -2,6 +2,7 @@ import { ListCoursesController } from './list-courses-controller'
 import { ListCourses } from '../../../domain/usecases/course/list-courses'
 import { CourseModel } from '../../../domain/models/course/course-model'
 import { serverError } from '../../helpers/http/http-helper'
+import { HttpRequest } from '../../protocols/http'
 
 interface SutTypes {
   sut: ListCoursesController
@@ -26,18 +27,20 @@ const makeSut = (): SutTypes => {
   }
 }
 
+const makeFakeRequest = (): HttpRequest => ({
+  body: {
+    university: 'any_name',
+    kind: 'any_kind',
+    level: 'any_level',
+    shift: 'any_shift'
+  }
+})
+
 describe('ListCourses Controller', () => {
   test('Should call ListCourses with correct values', async () => {
     const { sut, listCoursesStub } = makeSut()
     const listSpy = jest.spyOn(listCoursesStub, 'list')
-    const httpRequest = {
-      body: {
-        university: 'any_name',
-        kind: 'any_kind',
-        level: 'any_level',
-        shift: 'any_shift'
-      }
-    }
+    const httpRequest = makeFakeRequest()
     await sut.handle(httpRequest)
     expect(listSpy).toHaveBeenCalledWith(httpRequest.body)
   })
@@ -46,14 +49,7 @@ describe('ListCourses Controller', () => {
     const { sut, listCoursesStub } = makeSut()
     jest.spyOn(listCoursesStub, 'list')
       .mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
-    const httpRequest = {
-      body: {
-        university: 'any_name',
-        kind: 'any_kind',
-        level: 'any_level',
-        shift: 'any_shift'
-      }
-    }
+    const httpRequest = makeFakeRequest()
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse).toEqual(serverError(new Error()))
   })
