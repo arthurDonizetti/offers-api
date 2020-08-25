@@ -1,7 +1,7 @@
 import { ListCoursesController } from './list-courses-controller'
 import { ListCourses } from '../../../domain/usecases/course/list-courses'
 import { CourseModel } from '../../../domain/models/course/course-model'
-import { serverError } from '../../helpers/http/http-helper'
+import { serverError, ok } from '../../helpers/http/http-helper'
 import { HttpRequest } from '../../protocols/http'
 
 interface SutTypes {
@@ -52,5 +52,12 @@ describe('ListCourses Controller', () => {
     const httpRequest = makeFakeRequest()
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse).toEqual(serverError(new Error()))
+  })
+
+  test('Should return ok if valid values are provided', async () => {
+    const { sut } = makeSut()
+    const httpRequest = makeFakeRequest()
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse).toEqual(ok([]))
   })
 })
