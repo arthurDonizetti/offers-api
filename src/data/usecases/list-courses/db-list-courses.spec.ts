@@ -41,4 +41,20 @@ describe('DbListCourses UseCase', () => {
     await sut.list(httpRequest.body)
     expect(listSpy).toHaveBeenCalledWith(httpRequest.body)
   })
+
+  test('Should throw if ListCourseRepository throws', async () => {
+    const { sut, listCourseRepositoryStub } = makeSut()
+    jest.spyOn(listCourseRepositoryStub, 'list')
+      .mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    const httpRequest = {
+      body: {
+        university: 'any_university',
+        kind: 'any_kind',
+        level: 'any_level',
+        shift: 'any_shift'
+      }
+    }
+    const promise = sut.list(httpRequest.body)
+    expect(promise).rejects.toThrow()
+  })
 })
