@@ -6,7 +6,7 @@ export class DbListCourses implements ListCourses {
   constructor (private readonly listCourseRepository: ListCourseRepository) {}
 
   async list (params: SearchCourseModel): Promise<CourseModel[]> {
-    await this.listCourseRepository.list(params)
-    return await new Promise(resolve => resolve(null))
+    const courses = await this.listCourseRepository.list(params)
+    return courses
   }
 }
