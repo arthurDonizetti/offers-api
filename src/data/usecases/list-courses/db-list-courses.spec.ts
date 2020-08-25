@@ -53,4 +53,11 @@ describe('DbListCourses UseCase', () => {
     const promise = sut.list(httpRequest.body)
     expect(promise).rejects.toThrow()
   })
+
+  test('Should return an list of courses on success', async () => {
+    const { sut } = makeSut()
+    const httpRequest = makeFakeSearch()
+    const httpResponse = await sut.list(httpRequest.body)
+    expect(httpResponse).toEqual([])
+  })
 })
