@@ -1,6 +1,13 @@
-import { Controller, HttpRequest, HttpResponse, Validation } from '../../../presentation/protocols'
-import { ListCourses } from '../../../domain/usecases/course/list-courses'
-import { serverError, ok, badRequest } from '../../helpers/http/http-helper'
+import {
+  Controller,
+  HttpRequest,
+  HttpResponse,
+  Validation,
+  ListCourses,
+  serverError,
+  badRequest,
+  ok
+} from './list-courses-protocols'
 
 export class ListCoursesController implements Controller {
   constructor (

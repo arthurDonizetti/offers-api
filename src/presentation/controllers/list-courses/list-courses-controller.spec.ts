@@ -1,9 +1,14 @@
+import {
+  HttpRequest,
+  Validation,
+  ListCourses,
+  serverError,
+  badRequest,
+  ok
+} from './list-courses-protocols'
+
 import { ListCoursesController } from './list-courses-controller'
-import { ListCourses } from '../../../domain/usecases/course/list-courses'
 import { CourseModel } from '../../../domain/models/course/course-model'
-import { serverError, ok, badRequest } from '../../helpers/http/http-helper'
-import { HttpRequest } from '../../protocols/http'
-import { Validation } from '../../protocols'
 import { InvalidParamError } from '../../errors'
 
 const makeListCoursesStub = (): ListCourses => {
