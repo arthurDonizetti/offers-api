@@ -1,11 +1,10 @@
 import { CourseModel } from '../../models/course/course-model'
 
 export interface SearchCourseModel {
-  name: string
+  university: string
   kind: string
   level: string
   shift: string
-  university: string
 }
 
 export interface ListCourses {

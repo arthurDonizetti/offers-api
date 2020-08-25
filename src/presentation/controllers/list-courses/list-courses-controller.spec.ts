@@ -10,10 +10,11 @@ import {
 import { ListCoursesController } from './list-courses-controller'
 import { CourseModel } from '../../../domain/models/course/course-model'
 import { InvalidParamError } from '../../errors'
+import { SearchCourseModel } from '../../../domain/usecases/course/list-courses'
 
 const makeListCoursesStub = (): ListCourses => {
   class ListCoursesStub implements ListCourses {
-    async list (params: any): Promise<CourseModel[]> {
+    async list (params: SearchCourseModel): Promise<CourseModel[]> {
       return []
     }
   }
