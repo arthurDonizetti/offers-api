@@ -1,9 +1,15 @@
 import { CampusModel } from '../campus/campus-model'
+import { UniversityModel } from '../university/university-model'
+
+export interface ResultFormat {
+  course: CourseModel
+}
 
 export interface CourseModel {
   name: string
   kind: string
   level: string
   shift: string
-  campus: CampusModel
+  university?: UniversityModel
+  campus?: CampusModel
 }
