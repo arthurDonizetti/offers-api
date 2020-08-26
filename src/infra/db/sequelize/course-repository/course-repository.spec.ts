@@ -97,7 +97,7 @@ describe('Course Postgre Repository', () => {
       level: '',
       shift: ''
     })
-    expect(list).toMatchObject(
+    expect(list).toEqual(
       [
         {
           course: {
