@@ -1,6 +1,6 @@
 import { ListCourseRepository } from '../../../../data/protocols/db/course/list-course-repository'
 import { SearchCourseModel } from '../../../../domain/usecases/course/list-courses'
-import { ResultFormat } from '../../../../domain/models/course/course-model'
+import { SearchCourseResultFormat } from '../../../../domain/models/course/course-model'
 import { CourseRepoModel } from '../models/course-model'
 import { UniversityRepoModel } from '../models/university-model'
 import { CampusRepoModel } from '../models/campus-model'
@@ -14,7 +14,7 @@ export class CoursePostgreRepository implements ListCourseRepository {
 
   constructor (private readonly connection: any) {}
 
-  async list (param: SearchCourseModel): Promise<ResultFormat[]> {
+  async list (param: SearchCourseModel): Promise<SearchCourseResultFormat[]> {
     await this.initializeModels(this.connection)
     const { university, kind, level, shift } = param
     const searchResult = await this.courseModel.findAll(
@@ -92,7 +92,7 @@ export class CoursePostgreRepository implements ListCourseRepository {
         }
       }
     )
-    const formattedData: ResultFormat[] = []
+    const formattedData: SearchCourseResultFormat[] = []
     this.formatResultToSend(formattedData, searchResult)
     return formattedData
   }
@@ -109,9 +109,9 @@ export class CoursePostgreRepository implements ListCourseRepository {
     associateUniversity(this.campusModel)
   }
 
-  private readonly formatResultToSend = (formatted: ResultFormat[], data: Array<Model<any, any>>): void => {
+  private readonly formatResultToSend = (formatted: SearchCourseResultFormat[], data: Array<Model<any, any>>): void => {
     for (const item of data) {
-      const structure: ResultFormat = { course: { name: '', shift: '', level: '', kind: '' } }
+      const structure: SearchCourseResultFormat = { course: { name: '', shift: '', level: '', kind: '' } }
       structure.course = {
         name: item.getDataValue('name'),
         kind: item.getDataValue('kind'),

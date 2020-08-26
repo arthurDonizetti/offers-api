@@ -1,7 +1,7 @@
 import { CampusModel } from '../campus/campus-model'
 import { UniversityModel } from '../university/university-model'
 
-export interface ResultFormat {
+export interface SearchCourseResultFormat {
   course: CourseModel
 }
 

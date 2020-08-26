@@ -1,4 +1,4 @@
-import { ResultFormat } from '../../models/course/course-model'
+import { SearchCourseResultFormat } from '../../models/course/course-model'
 
 export interface SearchCourseModel {
   university: string
@@ -8,5 +8,5 @@ export interface SearchCourseModel {
 }
 
 export interface ListCourses {
-  list: (params: SearchCourseModel) => Promise<ResultFormat[]>
+  list: (params: SearchCourseModel) => Promise<SearchCourseResultFormat[]>
 }

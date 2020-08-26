@@ -8,13 +8,13 @@ import {
 } from './list-courses-protocols'
 
 import { ListCoursesController } from './list-courses-controller'
-import { ResultFormat } from '../../../domain/models/course/course-model'
+import { SearchCourseResultFormat } from '../../../domain/models/course/course-model'
 import { InvalidParamError } from '../../errors'
 import { SearchCourseModel } from '../../../domain/usecases/course/list-courses'
 
 const makeListCoursesStub = (): ListCourses => {
   class ListCoursesStub implements ListCourses {
-    async list (params: SearchCourseModel): Promise<ResultFormat[]> {
+    async list (params: SearchCourseModel): Promise<SearchCourseResultFormat[]> {
       return []
     }
   }

@@ -1,6 +1,6 @@
 import {
   SearchCourseModel,
-  ResultFormat,
+  SearchCourseResultFormat,
   ListCourseRepository
 } from './db-list-courses-protocols'
 import { DbListCourses } from './db-list-courses'
@@ -8,7 +8,7 @@ import { HttpRequest } from 'presentation/protocols'
 
 const makeListCourseRepositoryStub = (): ListCourseRepository => {
   class ListCourseRepositoryStub implements ListCourseRepository {
-    async list (param: SearchCourseModel): Promise<ResultFormat[]> {
+    async list (param: SearchCourseModel): Promise<SearchCourseResultFormat[]> {
       return []
     }
   }
