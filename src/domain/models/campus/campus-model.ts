@@ -4,6 +4,6 @@ import { CourseModel } from '../course/course-model'
 export interface CampusModel {
   name: string
   city: string
-  university: UniversityModel
-  courses: CourseModel[]
+  university?: UniversityModel
+  courses?: CourseModel[]
 }
