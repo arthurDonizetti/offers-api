@@ -2,6 +2,7 @@ import { DbListOffers } from './db-list-offers'
 import { SearchOfferModel } from '../../../domain/usecases/offer/list-offers'
 import { OfferModel } from '../../../domain/models/offer/offer-model'
 import { ListOfferRepository } from '../../protocols/db/offer/list-offer-repository'
+import { HttpRequest } from '../../../presentation/protocols'
 
 const makeListOfferRepositoryStub = (): ListOfferRepository => {
   class ListOfferRepositoryStub implements ListOfferRepository {
@@ -26,23 +27,25 @@ const makeSut = (): SutTypes => {
   }
 }
 
+const makeFakeRequest = (): HttpRequest => ({
+  body: {
+    university: 'any_university',
+    course: 'any_course',
+    city: 'any_city',
+    kind: 'any_kind',
+    level: 'any_level',
+    shift: 'any_shift',
+    order: {
+      priceWithDiscount: 'ASC'
+    }
+  }
+})
+
 describe('DbListOffers UseCase', () => {
   test('Should call ListOfferRepository with correct values', async () => {
     const { sut, listOfferRepositoryStub } = makeSut()
     const listSpy = jest.spyOn(listOfferRepositoryStub, 'list')
-    const httpRequest = {
-      body: {
-        university: 'any_university',
-        course: 'any_course',
-        city: 'any_city',
-        kind: 'any_kind',
-        level: 'any_level',
-        shift: 'any_shift',
-        order: {
-          priceWithDiscount: 'ASC'
-        }
-      }
-    }
+    const httpRequest = makeFakeRequest()
     await sut.list(httpRequest.body)
     expect(listSpy).toHaveBeenCalledWith(httpRequest.body)
   })
