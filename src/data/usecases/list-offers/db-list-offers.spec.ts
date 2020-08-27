@@ -57,4 +57,10 @@ describe('DbListOffers UseCase', () => {
     const httpResponse = sut.list(makeFakeRequest().body)
     await expect(httpResponse).rejects.toThrow()
   })
+
+  test('Should return a list of offers on success', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.list(makeFakeRequest().body)
+    await expect(httpResponse).toEqual([])
+  })
 })
