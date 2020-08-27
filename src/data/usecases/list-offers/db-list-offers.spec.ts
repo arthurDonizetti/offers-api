@@ -49,4 +49,12 @@ describe('DbListOffers UseCase', () => {
     await sut.list(httpRequest.body)
     expect(listSpy).toHaveBeenCalledWith(httpRequest.body)
   })
+
+  test('Should throw if ListOfferRepository throws', async () => {
+    const { sut, listOfferRepositoryStub } = makeSut()
+    jest.spyOn(listOfferRepositoryStub, 'list')
+      .mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    const httpResponse = sut.list(makeFakeRequest().body)
+    await expect(httpResponse).rejects.toThrow()
+  })
 })
