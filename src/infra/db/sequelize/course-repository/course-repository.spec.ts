@@ -130,4 +130,17 @@ describe('Course Postgre Repository', () => {
     })
     expect(list).toEqual([])
   })
+
+  test('Should return the correct amount of items found', async () => {
+    const sut = makeSut()
+    await makeTestData(connection)
+    await makeTestData(connection)
+    const list = await sut.list({
+      university: 'any_university',
+      kind: 'Presencial',
+      level: '',
+      shift: ''
+    })
+    expect(list.length).toBe(3)
+  })
 })
