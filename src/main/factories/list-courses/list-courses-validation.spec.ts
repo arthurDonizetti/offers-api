@@ -12,6 +12,7 @@ describe('ListCoursesValidation Factory', () => {
   test('Should call ValidationComposite with all validations', () => {
     makeListCoursesValidation()
     const validations: Validation[] = []
+    validations.push(new OptionalFieldValidation('university'))
     validations.push(new OptionalFieldValidation('kind'))
     validations.push(new OptionalFieldValidation('level'))
     validations.push(new OptionalFieldValidation('shift'))
