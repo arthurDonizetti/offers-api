@@ -16,7 +16,10 @@ export class CoursePostgreRepository implements ListCourseRepository {
 
   async list (param: SearchCourseModel): Promise<SearchCourseResultFormat[]> {
     await this.initializeModels(this.connection)
-    const { university, kind, level, shift } = param
+    // const { university, kind, level, shift } = param
+
+    const clause = this.makeWhereClause(param)
+
     const searchResult = await this.courseModel.findAll(
       {
         attributes: ['name', 'kind', 'level', 'shift'],
@@ -27,74 +30,46 @@ export class CoursePostgreRepository implements ListCourseRepository {
           include: [{
             model: this.universityModel,
             required: true,
-            attributes: ['name', 'score', 'logo_url'],
-            where: {
-              [Op.or]: [
-                {
-                  name: {
-                    [Op.eq]: university
-                  }
-                },
-                {
-                  name: {
-                    [Op.not]: null
-                  }
-                }
-              ]
-            }
+            attributes: ['name', 'score', 'logo_url']
           }]
         }],
-        where: {
-          [Op.or]: [
-            {
-              [Op.or]: [
-                {
-                  kind: {
-                    [Op.eq]: kind
-                  }
-                },
-                {
-                  kind: {
-                    [Op.not]: null
-                  }
-                }
-              ]
-            },
-            {
-              [Op.or]: [
-                {
-                  level: {
-                    [Op.eq]: level
-                  }
-                },
-                {
-                  level: {
-                    [Op.not]: null
-                  }
-                }
-              ]
-            },
-            {
-              [Op.or]: [
-                {
-                  shift: {
-                    [Op.eq]: shift
-                  }
-                },
-                {
-                  shift: {
-                    [Op.not]: null
-                  }
-                }
-              ]
-            }
-          ]
-        }
+        where: clause
       }
     )
     const formattedData: SearchCourseResultFormat[] = []
     this.formatResultToSend(formattedData, searchResult)
     return formattedData
+  }
+
+  private makeWhereClause (param: SearchCourseModel): any {
+    const { university, kind, level, shift } = param
+    const whereClause = {}
+
+    if (university !== '') {
+      whereClause['$"Campus->University"."name"$'] = {
+        [Op.substring]: `${university}`
+      }
+    }
+
+    if (kind !== '') {
+      whereClause['kind'] = {
+        [Op.substring]: `${kind}`
+      }
+    }
+
+    if (level !== '') {
+      whereClause['level'] = {
+        [Op.substring]: `${level}`
+      }
+    }
+
+    if (shift !== '') {
+      whereClause['shift'] = {
+        [Op.substring]: `${shift}`
+      }
+    }
+
+    return whereClause
   }
 
   private readonly initializeModels = async (connection: any): Promise<void> => {
