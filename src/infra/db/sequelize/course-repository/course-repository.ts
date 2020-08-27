@@ -16,7 +16,6 @@ export class CoursePostgreRepository implements ListCourseRepository {
 
   async list (param: SearchCourseModel): Promise<SearchCourseResultFormat[]> {
     await this.initializeModels(this.connection)
-    // const { university, kind, level, shift } = param
 
     const clause = this.makeWhereClause(param)
 
