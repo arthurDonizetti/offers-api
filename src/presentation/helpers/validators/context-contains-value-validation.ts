@@ -13,6 +13,10 @@ export class ContextContainsValueValidation implements Validation {
   ) {}
 
   validate (input: any): Error {
+    if (input[this.fieldName] === '') {
+      return null
+    }
+
     const validValue = this.contextValues.filter(acceptedValue =>
       acceptedValue.toLowerCase() === input[this.fieldName].toLowerCase())
 
