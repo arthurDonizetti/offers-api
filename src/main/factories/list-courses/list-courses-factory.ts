@@ -4,8 +4,8 @@ import { DbListCourses } from '../../../data/usecases/list-courses/db-list-cours
 import { CoursePostgreRepository } from '../../../infra/db/sequelize/course-repository/course-repository'
 import { SequelizeHelper as connection } from '../../../infra/db/sequelize/helpers/sequelize-helper'
 
-export const makeListCoursesController = (): ListCoursesController => {
-  connection.connect()
+export const makeListCoursesController = async (): Promise<ListCoursesController> => {
+  await connection.connect()
   const listCourseRepository = new CoursePostgreRepository(connection)
   const listCourses = new DbListCourses(listCourseRepository)
   return new ListCoursesController(listCourses, makeListCoursesValidation())
