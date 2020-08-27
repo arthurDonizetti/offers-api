@@ -24,6 +24,23 @@ describe('Course Routes', () => {
           shift: 'Noite'
         })
         .expect(200)
+      await request(app)
+        .post('/api/course/list')
+        .send({
+          level: 'Bacharelado',
+          shift: 'Noite'
+        })
+        .expect(200)
+      await request(app)
+        .post('/api/course/list')
+        .send({
+          shift: 'Noite'
+        })
+        .expect(200)
+      await request(app)
+        .post('/api/course/list')
+        .send({})
+        .expect(200)
     })
   })
 })
