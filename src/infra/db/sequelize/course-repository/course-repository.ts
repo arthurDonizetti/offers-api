@@ -46,25 +46,25 @@ export class CoursePostgreRepository implements ListCourseRepository {
 
     if (university !== '') {
       whereClause['$"Campus->University"."name"$'] = {
-        [Op.substring]: `${university}`
+        [Op.iLike]: `%${university}%`
       }
     }
 
     if (kind !== '') {
       whereClause['kind'] = {
-        [Op.substring]: `${kind}`
+        [Op.iLike]: `${kind}`
       }
     }
 
     if (level !== '') {
       whereClause['level'] = {
-        [Op.substring]: `${level}`
+        [Op.iLike]: `${level}`
       }
     }
 
     if (shift !== '') {
       whereClause['shift'] = {
-        [Op.substring]: `${shift}`
+        [Op.iLike]: `${shift}`
       }
     }
 
