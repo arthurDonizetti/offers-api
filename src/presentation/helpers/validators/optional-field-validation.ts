@@ -6,6 +6,9 @@ export class OptionalFieldValidation implements Validation {
   ) {}
 
   validate (input: any): Error {
+    if (!input[this.fieldName]) {
+      input[this.fieldName] = ''
+    }
     return null
   }
 }
