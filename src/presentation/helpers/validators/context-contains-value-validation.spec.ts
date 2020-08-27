@@ -30,6 +30,14 @@ describe('ContextContainsValue Validation', () => {
     expect(error).toBeFalsy()
   })
 
+  test('Should not validate if field is provided with an empty value', () => {
+    const fieldName = 'anyField'
+    const context = ['first_value', 'second_value', 'third_value']
+    const sut = makeSut(fieldName, context)
+    const error = sut.validate({ anyField: '' })
+    expect(error).toBeFalsy()
+  })
+
   // test('Should match values with accented characters on succeeds', () => {
   //   const fieldName = 'anyField'
   //   const context = ['first_value', 'second_value', 'third_value']
