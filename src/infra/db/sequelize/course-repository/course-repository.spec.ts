@@ -77,6 +77,26 @@ const makeSut = (): CoursePostgreRepository => {
   return new CoursePostgreRepository(connection)
 }
 
+const makeFakeResult = (): any => ([
+  {
+    course: {
+      name: 'any_course',
+      kind: 'Presencial',
+      level: 'Bacharelado',
+      shift: 'Noite',
+      university: {
+        name: 'any_university',
+        score: 5.1,
+        logo_url: 'any_logo.jpg'
+      },
+      campus: {
+        name: 'any_campus',
+        city: 'any_city'
+      }
+    }
+  }
+])
+
 describe('Course Postgre Repository', () => {
   beforeAll(async () => {
     await connection.connect()
@@ -103,27 +123,7 @@ describe('Course Postgre Repository', () => {
       level: '',
       shift: ''
     })
-    expect(list).toEqual(
-      [
-        {
-          course: {
-            name: 'any_course',
-            kind: 'Presencial',
-            level: 'Bacharelado',
-            shift: 'Noite',
-            university: {
-              name: 'any_university',
-              score: 5.1,
-              logo_url: 'any_logo.jpg'
-            },
-            campus: {
-              name: 'any_campus',
-              city: 'any_city'
-            }
-          }
-        }
-      ]
-    )
+    expect(list).toEqual(makeFakeResult())
   })
 
   test('Should return an empty array if no result is found', async () => {
@@ -158,26 +158,6 @@ describe('Course Postgre Repository', () => {
       level: '',
       shift: ''
     })
-    expect(list).toEqual(
-      [
-        {
-          course: {
-            name: 'any_course',
-            kind: 'Presencial',
-            level: 'Bacharelado',
-            shift: 'Noite',
-            university: {
-              name: 'any_university',
-              score: 5.1,
-              logo_url: 'any_logo.jpg'
-            },
-            campus: {
-              name: 'any_campus',
-              city: 'any_city'
-            }
-          }
-        }
-      ]
-    )
+    expect(list).toEqual(makeFakeResult())
   })
 })
