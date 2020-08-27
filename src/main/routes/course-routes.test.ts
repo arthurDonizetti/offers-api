@@ -14,5 +14,16 @@ describe('Course Routes', () => {
         })
         .expect(200)
     })
+
+    test('Should return success if missing param is provided', async () => {
+      await request(app)
+        .post('/api/course/list')
+        .send({
+          university: 'any_university',
+          level: 'Bacharelado',
+          shift: 'Noite'
+        })
+        .expect(200)
+    })
   })
 })
