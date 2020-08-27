@@ -8,7 +8,8 @@ export class ContextContainsValueValidation implements Validation {
   ) {}
 
   validate (input: any): Error {
-    if (!this.contextValues.includes(input[this.fieldName])) {
+    const validValue = this.contextValues.filter(acceptedValue => acceptedValue.toLowerCase() === input[this.fieldName].toLowerCase())
+    if (validValue.length === 0) {
       return new ValueOutOfContextError(this.fieldName, this.contextValues)
     }
   }
