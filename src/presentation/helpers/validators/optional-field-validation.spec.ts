@@ -10,4 +10,10 @@ describe('OptionalField Validation', () => {
     const result = sut.validate({ anyField: 'any_value' })
     expect(result).toBeFalsy()
   })
+
+  test('Should not return if field is not provided', () => {
+    const sut = makeSut('anyField')
+    const result = sut.validate({ })
+    expect(result).toBeFalsy()
+  })
 })
