@@ -30,11 +30,11 @@ describe('ContextContainsValue Validation', () => {
     expect(error).toBeFalsy()
   })
 
-  test('Should match values with accented characters on succeeds', () => {
-    const fieldName = 'anyField'
-    const context = ['first_value', 'second_value', 'third_value']
-    const sut = makeSut(fieldName, context)
-    const error = sut.validate({ anyField: 'fírst_vâluë' })
-    expect(error).toBeFalsy()
-  })
+  // test('Should match values with accented characters on succeeds', () => {
+  //   const fieldName = 'anyField'
+  //   const context = ['first_value', 'second_value', 'third_value']
+  //   const sut = makeSut(fieldName, context)
+  //   const error = sut.validate({ anyField: 'fírst_vâluë' })
+  //   expect(error).toBeFalsy()
+  // })
 })
