@@ -7,6 +7,7 @@ import {
 
 export const makeListCoursesValidation = (): ValidationComposite => {
   const validations: Validation[] = []
+  validations.push(new OptionalFieldValidation('university'))
   validations.push(new OptionalFieldValidation('kind'))
   validations.push(new OptionalFieldValidation('level'))
   validations.push(new OptionalFieldValidation('shift'))
