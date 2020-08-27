@@ -2,6 +2,7 @@ import { ListOffersController } from './list-offers-controller'
 import { ListOffers, SearchOfferModel } from '../../../domain/usecases/offer/list-offers'
 import { OfferModel } from '../../../domain/models/offer/offer-model'
 import { HttpRequest } from '../login/login-protocols'
+import { serverError } from '../signup/signup-protocols'
 
 const makeListOffersStub = (): ListOffers => {
   class ListOffersStub implements ListOffers {
@@ -47,5 +48,13 @@ describe('ListOffers Controller', () => {
     const httpRequest = makeFakeRequest()
     await sut.handle(httpRequest)
     expect(listSpy).toHaveBeenCalledWith(httpRequest.body)
+  })
+
+  test('Should return ServerError if ListOffer throws', async () => {
+    const { sut, listOffersStub } = makeSut()
+    jest.spyOn(listOffersStub, 'list')
+      .mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    const httpResponse = await sut.handle(makeFakeRequest())
+    expect(httpResponse).toEqual(serverError(new Error()))
   })
 })
