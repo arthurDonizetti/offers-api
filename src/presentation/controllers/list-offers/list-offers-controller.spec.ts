@@ -1,8 +1,17 @@
 import { ListOffersController } from './list-offers-controller'
 import { ListOffers, SearchOfferModel } from '../../../domain/usecases/offer/list-offers'
 import { OfferModel } from '../../../domain/models/offer/offer-model'
-import { HttpRequest } from '../login/login-protocols'
-import { serverError, ok } from '../signup/signup-protocols'
+import { HttpRequest, Validation } from '../../protocols'
+import { serverError, ok } from '../../helpers/http/http-helper'
+
+const makeValidationStub = (): Validation => {
+  class ValidationStub implements Validation {
+    validate (input: any): Error {
+      return null
+    }
+  }
+  return new ValidationStub()
+}
 
 const makeListOffersStub = (): ListOffers => {
   class ListOffersStub implements ListOffers {
@@ -16,14 +25,17 @@ const makeListOffersStub = (): ListOffers => {
 interface SutTypes {
   sut: ListOffersController
   listOffersStub: ListOffers
+  validationStub: Validation
 }
 
 const makeSut = (): SutTypes => {
+  const validationStub = makeValidationStub()
   const listOffersStub = makeListOffersStub()
-  const sut = new ListOffersController(listOffersStub)
+  const sut = new ListOffersController(listOffersStub, validationStub)
   return {
     sut,
-    listOffersStub
+    listOffersStub,
+    validationStub
   }
 }
 
@@ -62,5 +74,13 @@ describe('ListOffers Controller', () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(ok([]))
+  })
+
+  test('Should call Validation with correct value', async () => {
+    const { sut, validationStub } = makeSut()
+    const validateSpy = jest.spyOn(validationStub, 'validate')
+    const httpRequest = makeFakeRequest()
+    await sut.handle(httpRequest)
+    expect(validateSpy).toHaveBeenCalledWith(httpRequest.body)
   })
 })
