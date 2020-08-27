@@ -7,12 +7,12 @@ import { SequelizeHelper as connection } from '../../../infra/db/sequelize/helpe
 import { BcryptAdapter } from '../../../infra/cryptography/bcrypt-adapter/bcrypt-adapter'
 import { JwtAdapter } from '../../../infra/cryptography/jwt-adapter/jwt-adapter'
 
-export const makeLoginController = (): LoginController => {
+export const makeLoginController = async (): Promise<LoginController> => {
   const secret = process.env.JWT_SECRET
   const encrypter = new JwtAdapter(secret)
   const salt = 12
   const hashComparer = new BcryptAdapter(salt)
-  connection.connect()
+  await connection.connect()
   const accountRepository = new AccountPostgreRepository(connection)
   const authentication = new DbAuthentication(
     accountRepository,
