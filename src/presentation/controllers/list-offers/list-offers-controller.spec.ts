@@ -2,12 +2,12 @@ import { ListOffersController } from './list-offers-controller'
 import { ListOffers, SearchOfferModel } from '../../../domain/usecases/offer/list-offers'
 import { OfferModel } from '../../../domain/models/offer/offer-model'
 import { HttpRequest } from '../login/login-protocols'
-import { serverError } from '../signup/signup-protocols'
+import { serverError, ok } from '../signup/signup-protocols'
 
 const makeListOffersStub = (): ListOffers => {
   class ListOffersStub implements ListOffers {
     async list (params: SearchOfferModel): Promise<OfferModel[]> {
-      return await new Promise(resolve => resolve(null))
+      return await new Promise(resolve => resolve([]))
     }
   }
   return new ListOffersStub()
@@ -56,5 +56,11 @@ describe('ListOffers Controller', () => {
       .mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
     const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(serverError(new Error()))
+  })
+
+  test('Should return ok if valid values are provided', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle(makeFakeRequest())
+    expect(httpResponse).toEqual(ok([]))
   })
 })
