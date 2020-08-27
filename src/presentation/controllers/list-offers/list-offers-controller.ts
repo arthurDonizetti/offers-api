@@ -1,6 +1,6 @@
 import { Controller, HttpRequest, HttpResponse } from '../../protocols'
 import { ListOffers } from '../../../domain/usecases/offer/list-offers'
-import { serverError } from '../signup/signup-protocols'
+import { serverError, ok } from '../signup/signup-protocols'
 
 export class ListOffersController implements Controller {
   constructor (
@@ -9,8 +9,8 @@ export class ListOffersController implements Controller {
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      await this.listOffers.list(httpRequest.body)
-      return null
+      const offers = await this.listOffers.list(httpRequest.body)
+      return ok(offers)
     } catch (error) {
       return serverError(error)
     }
