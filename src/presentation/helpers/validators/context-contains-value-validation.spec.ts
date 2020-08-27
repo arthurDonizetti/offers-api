@@ -21,4 +21,12 @@ describe('ContextContainsValue Validation', () => {
     const error = sut.validate({ anyField: 'first_value' })
     expect(error).toBeFalsy()
   })
+
+  test('Should match values on insensitive case on succeeds', () => {
+    const fieldName = 'anyField'
+    const context = ['first_value', 'second_value', 'third_value']
+    const sut = makeSut(fieldName, context)
+    const error = sut.validate({ anyField: 'First_value' })
+    expect(error).toBeFalsy()
+  })
 })
