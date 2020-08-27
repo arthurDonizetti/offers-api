@@ -8,7 +8,7 @@ export class DbListOffers implements ListOffers {
   ) {}
 
   async list (params: SearchOfferModel): Promise<OfferModel[]> {
-    await this.listOfferRepository.list(params)
-    return await new Promise(resolve => resolve(null))
+    const offers = await this.listOfferRepository.list(params)
+    return offers
   }
 }
