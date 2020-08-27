@@ -119,4 +119,15 @@ describe('Course Postgre Repository', () => {
       ]
     )
   })
+
+  test('Should return an empty array if no result is found', async () => {
+    const sut = makeSut()
+    const list = await sut.list({
+      university: 'other_university',
+      kind: '',
+      level: '',
+      shift: ''
+    })
+    expect(list).toEqual([])
+  })
 })
