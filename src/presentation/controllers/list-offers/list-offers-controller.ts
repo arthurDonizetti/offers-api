@@ -1,6 +1,6 @@
 import { Controller, HttpRequest, HttpResponse, Validation } from '../../protocols'
 import { ListOffers } from '../../../domain/usecases/offer/list-offers'
-import { serverError, ok } from '../../helpers/http/http-helper'
+import { serverError, ok, badRequest } from '../../helpers/http/http-helper'
 
 export class ListOffersController implements Controller {
   constructor (
@@ -10,7 +10,10 @@ export class ListOffersController implements Controller {
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      this.validation.validate(httpRequest.body)
+      const error = this.validation.validate(httpRequest.body)
+      if (error) {
+        return badRequest(error)
+      }
       const offers = await this.listOffers.list(httpRequest.body)
       return ok(offers)
     } catch (error) {
