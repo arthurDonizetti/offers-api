@@ -81,11 +81,17 @@ describe('Course Postgre Repository', () => {
   beforeAll(async () => {
     await connection.connect()
     initializeModels(connection)
+  })
+
+  beforeEach(async () => {
     await makeTestData(connection)
   })
 
-  afterAll(async () => {
+  afterEach(async () => {
     await destroyTestData(connection)
+  })
+
+  afterAll(async () => {
     await connection.disconnect()
   })
 
@@ -142,5 +148,36 @@ describe('Course Postgre Repository', () => {
       shift: ''
     })
     expect(list.length).toBe(3)
+  })
+
+  test('Should match values on insensitive case', async () => {
+    const sut = makeSut()
+    const list = await sut.list({
+      university: '',
+      kind: 'presencial',
+      level: '',
+      shift: ''
+    })
+    expect(list).toEqual(
+      [
+        {
+          course: {
+            name: 'any_course',
+            kind: 'Presencial',
+            level: 'Bacharelado',
+            shift: 'Noite',
+            university: {
+              name: 'any_university',
+              score: 5.1,
+              logo_url: 'any_logo.jpg'
+            },
+            campus: {
+              name: 'any_campus',
+              city: 'any_city'
+            }
+          }
+        }
+      ]
+    )
   })
 })
