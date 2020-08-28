@@ -177,4 +177,22 @@ describe('Offer Postgre Repository', () => {
     })
     expect(list.length).toBe(3)
   })
+
+  test('Should match values on insensitive case', async () => {
+    const sut = makeSut()
+    const list = await sut.list({
+      city: 'Any_City',
+      course: 'Any_Course',
+      kind: 'presencial',
+      level: 'bacharelado',
+      shift: 'noite',
+      university: 'Any_University',
+      order: {
+        price_with_discount: {
+          direction: ''
+        }
+      }
+    })
+    expect(list).toEqual(makeFakeResult())
+  })
 })
