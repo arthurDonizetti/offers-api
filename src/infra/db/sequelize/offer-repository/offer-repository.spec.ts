@@ -157,4 +157,24 @@ describe('Offer Postgre Repository', () => {
     })
     expect(list).toEqual(makeFakeResult())
   })
+
+  test('Should return the correct amount of items found', async () => {
+    const sut = makeSut()
+    await makeTestData(connection)
+    await makeTestData(connection)
+    const list = await sut.list({
+      city: '',
+      course: '',
+      kind: '',
+      level: '',
+      shift: '',
+      university: '',
+      order: {
+        price_with_discount: {
+          direction: ''
+        }
+      }
+    })
+    expect(list.length).toBe(3)
+  })
 })
