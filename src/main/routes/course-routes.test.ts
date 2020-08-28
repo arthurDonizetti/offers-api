@@ -43,4 +43,21 @@ describe('Course Routes', () => {
         .expect(200)
     })
   })
+
+  describe('POST /offers', () => {
+    test('Should return ok on success', async () => {
+      await request(app)
+        .post('/api/course/offers')
+        .send({
+          university: 'any_university',
+          course: 'any_course',
+          city: 'any_city',
+          kind: 'Presencial',
+          level: 'Bacharelado',
+          shift: 'Noite',
+          price_with_discount_order_direction: 'ASC'
+        })
+        .expect(200)
+    })
+  })
 })
