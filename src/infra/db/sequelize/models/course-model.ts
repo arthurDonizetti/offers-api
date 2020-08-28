@@ -1,6 +1,6 @@
 import { Sequelize, Model, DataTypes, ModelCtor } from 'sequelize'
 
-export type ModelAssociation = (campus: ModelCtor<Model<any, any>>) => void
+export type ModelAssociation = (campus: ModelCtor<Model<any, any>>, offer?: ModelCtor<Model<any, any>>) => void
 
 export const CourseRepoModel = async (connection: Sequelize): Promise<ModelAssociation> => {
   interface Course extends Model {
@@ -49,8 +49,10 @@ export const CourseRepoModel = async (connection: Sequelize): Promise<ModelAssoc
     underscored: true
   })
 
-  const associate = (campus: ModelCtor<Model<any, any>>): void => {
-    // course.hasOne(offer, { onDelete: 'cascade', onUpdate: 'cascade' })
+  const associate = (campus: ModelCtor<Model<any, any>>, offer: ModelCtor<Model<any, any>>): void => {
+    if (offer) {
+      course.hasOne(offer, { onDelete: 'cascade', onUpdate: 'cascade' })
+    }
     course.belongsTo(campus, { foreignKey: 'campus_id' })
   }
 
