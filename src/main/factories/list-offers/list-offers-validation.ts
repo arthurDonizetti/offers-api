@@ -13,7 +13,7 @@ export const makeListOffersValidation = (): ValidationComposite => {
   validations.push(new OptionalFieldValidation('kind'))
   validations.push(new OptionalFieldValidation('level'))
   validations.push(new OptionalFieldValidation('shift'))
-  validations.push(new OptionalFieldValidation('order.price_with_discount.direction'))
-  validations.push(new ContextContainsValueValidation('order.price_with_discount.direction', ['ASC', 'DESC']))
+  validations.push(new OptionalFieldValidation('price_with_discount_order_direction'))
+  validations.push(new ContextContainsValueValidation('price_with_discount_order_direction', ['ASC', 'DESC']))
   return new ValidationComposite(validations)
 }
