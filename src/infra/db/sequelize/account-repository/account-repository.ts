@@ -16,7 +16,6 @@ export class AccountPostgreRepository implements AddAccountRepository, LoadAccou
 
   async add (accountData: AddAccountModel): Promise<AccountModel> {
     const account = await this.model.create(accountData)
-    this.connection.disconnect()
     return {
       id: account.getDataValue('id'),
       name: account.getDataValue('name'),
