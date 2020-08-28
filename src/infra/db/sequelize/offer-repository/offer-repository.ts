@@ -22,6 +22,7 @@ export class OfferPostgreRepository implements ListOfferRepository {
     await this.initializeModels(this.connection)
 
     const clause = this.makeWhereClause(param)
+    console.log(clause)
     const order = []
     if (param.price_with_discount_order_direction !== '') {
       order.push(['price_with_discount', param.price_with_discount_order_direction])
@@ -77,7 +78,7 @@ export class OfferPostgreRepository implements ListOfferRepository {
 
     if (course !== '') {
       whereClause['$"Course"."name"$'] = {
-        [Op.iLike]: `${course}`
+        [Op.iLike]: `%${course}%`
       }
     }
 
