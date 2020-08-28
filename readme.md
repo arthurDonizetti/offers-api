@@ -173,4 +173,5 @@ Algumas implementações e melhorias não puderam sr adicionadas no momento, mas
 2. Permitir a realização de _match_ dos filtros com valores sem necessidade de caracteres acentuados;
 3. Refatorar a criação de modelos de associação do Sequelize de uma forma melhor;
 4. Adicionar um LogControllerDecorator para gerenciamento de excessões lançadas;
-5. Linkar os endpoints de pesquisa num _middleware_ de autenticação para validação do JWT
+5. Linkar os endpoints de pesquisa num _middleware_ de autenticação para validação do JWT;
+6. Integração do Swagger para documentação desta API.
