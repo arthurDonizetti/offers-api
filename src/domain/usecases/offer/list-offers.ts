@@ -8,7 +8,9 @@ export interface SearchOfferModel {
   level: string
   shift: string
   order: {
-    priceWithDiscount: string
+    price_with_discount: {
+      direction: string
+    }
   }
 }
 

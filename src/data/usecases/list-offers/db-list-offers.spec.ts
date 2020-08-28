@@ -36,7 +36,9 @@ const makeFakeRequest = (): HttpRequest => ({
     level: 'any_level',
     shift: 'any_shift',
     order: {
-      priceWithDiscount: 'ASC'
+      price_with_discount: {
+        direction: 'ASC'
+      }
     }
   }
 })
