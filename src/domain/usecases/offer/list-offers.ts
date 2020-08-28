@@ -7,11 +7,7 @@ export interface SearchOfferModel {
   kind: string
   level: string
   shift: string
-  order: {
-    price_with_discount: {
-      direction: string
-    }
-  }
+  price_with_discount_order_direction: string
 }
 
 export interface ListOffers {

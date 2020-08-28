@@ -149,11 +149,7 @@ describe('Offer Postgre Repository', () => {
       level: '',
       shift: '',
       university: '',
-      order: {
-        price_with_discount: {
-          direction: ''
-        }
-      }
+      price_with_discount_order_direction: ''
     })
     expect(list).toEqual(makeFakeResult())
   })
@@ -169,11 +165,7 @@ describe('Offer Postgre Repository', () => {
       level: '',
       shift: '',
       university: '',
-      order: {
-        price_with_discount: {
-          direction: ''
-        }
-      }
+      price_with_discount_order_direction: ''
     })
     expect(list.length).toBe(3)
   })
@@ -187,11 +179,7 @@ describe('Offer Postgre Repository', () => {
       level: 'bacharelado',
       shift: 'noite',
       university: 'Any_University',
-      order: {
-        price_with_discount: {
-          direction: ''
-        }
-      }
+      price_with_discount_order_direction: ''
     })
     expect(list).toEqual(makeFakeResult())
   })

@@ -23,8 +23,8 @@ export class OfferPostgreRepository implements ListOfferRepository {
 
     const clause = this.makeWhereClause(param)
     const order = []
-    if (param.order.price_with_discount.direction !== '') {
-      order.push(['price_with_discount', param.order.price_with_discount.direction])
+    if (param.price_with_discount_order_direction !== '') {
+      order.push(['price_with_discount', param.price_with_discount_order_direction])
     }
 
     const searchResult = await this.offerModel.findAll(
