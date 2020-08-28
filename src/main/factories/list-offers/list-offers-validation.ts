@@ -14,6 +14,9 @@ export const makeListOffersValidation = (): ValidationComposite => {
   validations.push(new OptionalFieldValidation('level'))
   validations.push(new OptionalFieldValidation('shift'))
   validations.push(new OptionalFieldValidation('price_with_discount_order_direction'))
+  validations.push(new ContextContainsValueValidation('kind', ['Presencial', 'EaD']))
+  validations.push(new ContextContainsValueValidation('level', ['Bacharelado', 'Tecnólogo', 'Licenciatura']))
+  validations.push(new ContextContainsValueValidation('shift', ['Manhã', 'Noite', 'Virtual']))
   validations.push(new ContextContainsValueValidation('price_with_discount_order_direction', ['ASC', 'DESC']))
   return new ValidationComposite(validations)
 }
